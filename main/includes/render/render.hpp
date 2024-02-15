@@ -1921,41 +1921,7 @@ namespace render {
 			return true;
 		}
 
-		void Particles()
-		{
-			ImVec2 screen_size = { (float)GetSystemMetrics(SM_CXSCREEN), (float)GetSystemMetrics(SM_CYSCREEN) };
-
-			static ImVec2 partile_pos[100];
-			static ImVec2 partile_target_pos[100];
-			static float partile_speed[100];
-			static float partile_radius[100];
-
-
-			for (int i = 1; i < 89; i++)
-			{
-				if (partile_pos[i].x == 0 || partile_pos[i].y == 0)
-				{
-					partile_pos[i].x = rand() % (int)screen_size.x + 1;
-					partile_pos[i].y = 15.f;
-					partile_speed[i] = 1 + rand() % 25;
-					partile_radius[i] = rand() % 4;
-
-					partile_target_pos[i].x = rand() % (int)screen_size.x;
-					partile_target_pos[i].y = screen_size.y * 2;
-				}
-
-				partile_pos[i] = ImLerp(partile_pos[i], partile_target_pos[i], ImGui::GetIO().DeltaTime * (partile_speed[i] / 60));
-
-				if (partile_pos[i].y > screen_size.y)
-				{
-					partile_pos[i].x = 0;
-					partile_pos[i].y = 0;
-				}
-
-				ImGui::GetWindowDrawList()->AddCircleFilled(partile_pos[i], partile_radius[i], ImColor(122, 200, 190, 255)); //ImColor(71, 226, 67, 255 / 2));
-			}
-
-		}
+		
 
 		auto Menu() -> void {
 			ImGui::SetNextWindowSize(ImVec2(630, 500));
@@ -1974,30 +1940,14 @@ namespace render {
 
 				static int SecTab = 0;
 
-
-				//Name
-				pWindowDrawList->AddRectFilled(ImVec2(20 + p.x, 20 + p.y), ImVec2(160 + p.x, 80 + p.y), ImColor(10, 10, 10, 220), 4.f);
-
 				//Secondary Tabs (top)
 				pWindowDrawList->AddRectFilled(ImVec2(180 + p.x, 20 + p.y), ImVec2(610 + p.x, 80 + p.y), ImColor(10, 10, 10, 220), 4.f);
 
 				//Main Tabs (left)
 				pWindowDrawList->AddRectFilled(ImVec2(20 + p.x, 100 + p.y), ImVec2(160 + p.x, 480 + p.y), ImColor(10, 10, 10, 220), 4.f);
 
-
 				//Main Bg
 				pWindowDrawList->AddRectFilled(ImVec2(180 + p.x, 100 + p.y), ImVec2(610 + p.x, 480 + p.y), ImColor(10, 10, 10, 220), 4.f);
-
-				Particles();
-
-				ImGui::SetCursorPos(ImVec2(48, 40));
-				float oldfsize = ImGui::GetFont()->Scale;
-				ImGui::GetFont()->Scale = 1.73;
-				ImGui::PushFont(ImGui::GetFont());
-				ImGui::TextColored(ImVec4(0.5f, 0.8, 0.65f, 1.f), "RAY.cc");
-				ImGui::GetFont()->Scale = oldfsize;
-				ImGui::PopFont();
-				ImGui::GetFont()->Scale = oldfsize;
 
 				// LEFT TABS
 
